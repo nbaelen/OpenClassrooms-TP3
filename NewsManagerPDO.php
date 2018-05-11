@@ -3,21 +3,43 @@
 class NewsManagerPDO extends NewsManager {
 
     /**
+     * DAO de la BDD
+     * @var PDO
+     */
+    protected $db;
+
+    /**
+     * Constructeur de la classe NewsManagerPDO
+     * @param PDO $pDb | DAO de la BDD
+     */
+    public function __construct(PDO $pDb) {
+        $this->db = $pDb;
+    }
+
+    /**
      * Méthode permettant l'ajout d'une News
      * @param News $pNews | News à ajouter
      * @return void
      */
     protected function add(News $pNews) {
-        // TODO: Implement add() method.
+        $query = $this->db->prepare('INSERT INTO news(auteur, titre, contenu, dateAjout, dateModif) VALUES (?, ?, ?, NOW(), NOW())');
+        $query->execute([
+            $pNews->getAuteur(),
+            $pNews->getTitre(),
+            $pNews->getContenu()
+        ]);
     }
 
     /**
      * Méthode permettant la suppression d'une News
-     * @param $pNewsName | l'ID ou le nom de la News à supprimer
+     * @param $pNewsName | l'ID de la News à supprimer
      * @return void
      */
     protected function delete($pNewsName) {
-        // TODO: Implement delete() method.
+        if (is_numeric($pNewsName)) {
+            $query = $this->db->query('DELETE FROM news WHERE id = '.(int) $pNewsName);
+        }
+
     }
 
     /**
@@ -35,7 +57,6 @@ class NewsManagerPDO extends NewsManager {
      * @return void
      */
     public function save(News $pNews) {
-        // TODO: Implement save() method.
     }
 
     /**
@@ -43,7 +64,10 @@ class NewsManagerPDO extends NewsManager {
      * @return int
      */
     public function count() {
-        // TODO: Implement count() method.
+        $query = $this->db->query('SELECT COUNT(*) as count FROM news');
+        $data = $query->fetch();
+
+        return $data['count'];
     }
 
     /**
@@ -52,8 +76,20 @@ class NewsManagerPDO extends NewsManager {
      * @return News
      */
     public function get($pId) {
-        // TODO: Implement get() method.
+        $query = $this->db->prepare('SELECT id, auteur, titre, contenu, dateAjout, dateModif FROM news WHERE id = ?');
+        $query->execute([
+            (int) $pId
+        ]);
+        $query->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'News');
+
+        $news = $query->fetch();
+        $news->setDateajout(new DateTime($news->getDateajout()));
+        $news->setDatemodif(new DateTime($news->getDatemodif()));
+
+        return $news;
     }
+
+
 
     /**
      * Méthode permettant de récupérer une liste à partir de $pId renseigné, et d'une longueur $pNumber
@@ -62,6 +98,20 @@ class NewsManagerPDO extends NewsManager {
      * @return array
      */
     public function getList($pId, $pNumber) {
-        // TODO: Implement getList() method.
+        $query = $this->db->prepare('SELECT id, auteur, titre, contenu, dateAjout, dateModif FROM news WHERE id = ? LIMIT ? ORDER BY id DESC');
+        $query->execute([
+            $pId,
+            $pNumber
+        ]);
+        $query->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'News');
+
+        $news = [];
+        while ($news = $query->fetch()) {
+            $news->setDateajout(new DateTime($news->getDateajout()));
+            $news->setDatemodif(new DateTime($news->getDateajout()));
+            $news[] = $news;
+        }
+
+        return $news;
     }
 }
