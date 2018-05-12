@@ -8,7 +8,7 @@ function autoload($classname) {
 spl_autoload_register('autoload');
 
 
-//Création du PDO et du PersonnageManager
+//Création de PDO et de NewsManager
 include('database.php');
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 
@@ -40,9 +40,8 @@ $manager = new NewsManagerPDO($db);
         $newsList = $manager->getList(5);
 
         foreach ($newsList as $news) {
-            echo '<div id="'.$news->getId().'"><a href="index.php?id=' . $news->getId().'">' .$news->getTitre() . '</a>';
+            echo '<div id="'.$news->getId().'"><a href="?id=' . $news->getId().'">' .$news->getTitre() . '</a>';
             echo '<p>' . htmlspecialchars(nl2br($news->getContenu())) . '</p></div><br/>';
         }
     }
-
 ?>

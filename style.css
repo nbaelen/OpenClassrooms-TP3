@@ -2,3 +2,26 @@
 {
     text-align: center;
 }
+
+#whole-page
+{
+    text-align: center;
+}
+
+table, tbody, thead
+{
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+td, th
+{
+    padding: 3px 4px 3px 4px;
+}
+
+td
+{
+    border: 1px solid black;
+}
+
