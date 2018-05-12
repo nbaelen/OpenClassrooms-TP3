@@ -3,16 +3,18 @@
 class News {
 
     /* Déclaration des variables */
-    private $_id,
-            $_auteur,
-            $_titre,
-            $_contenu,
-            $_dateAjout,
-            $_dateModif;
+    private $id,
+            $auteur,
+            $titre,
+            $contenu,
+            $dateAjout,
+            $dateModif;
 
     /* Constructeur de classe */
-    public function __construct(array $pData) {
-        $this->hydrate($pData);
+    public function __construct($pData = []) {
+        if (!empty($pData)) {
+            $this->hydrate($pData);
+        }
     }
 
     /* Fonction d'hydratation de la classe */
@@ -28,57 +30,57 @@ class News {
 
     /* Déclaration des setters */
     public function setId($pId) {
-        $this->_id = (int) $pId;
+        $this->id = (int) $pId;
     }
 
     public function setAuteur($pAuteur) {
         if ($pAuteur != "") {
-            $this->_auteur = $pAuteur;
+            $this->auteur = $pAuteur;
         }
     }
 
     public function setTitre($pTitre) {
         if ($pTitre != "") {
-            $this->_titre = $pTitre;
+            $this->titre = $pTitre;
         }
     }
 
     public function setContenu($pContenu) {
         if ($pContenu != "") {
-            $this->_contenu = $pContenu;
+            $this->contenu = $pContenu;
         }
     }
 
     public function setDateajout($pDateAjout) {
-
+        $this->dateAjout = $pDateAjout;
     }
 
     public function setDatemodif($pDateModif) {
-
+        $this->dateModif = $pDateModif;
     }
 
     /* Déclaration des getters */
     public function getId() {
-        return $this->_id;
+        return $this->id;
     }
 
     public function getAuteur() {
-        return $this->_auteur;
+        return $this->auteur;
     }
 
     public function getTitre() {
-        return $this->_titre;
+        return $this->titre;
     }
 
     public function getContenu() {
-        return $this->_contenu;
+        return $this->contenu;
     }
 
     public function getDateajout() {
-        return $this->_dateajout;
+        return $this->dateAjout;
     }
 
     public function getDatemodif() {
-        return $this->_dateModif;
+        return $this->dateModif;
     }
 }

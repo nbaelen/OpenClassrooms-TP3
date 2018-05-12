@@ -78,13 +78,13 @@ class NewsManagerPDO extends NewsManager {
     public function get($pId) {
         $query = $this->db->prepare('SELECT id, auteur, titre, contenu, dateAjout, dateModif FROM news WHERE id = ?');
         $query->execute([
-            (int) $pId
+            $pId
         ]);
         $query->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'News');
 
         $news = $query->fetch();
-        $news->setDateajout(new DateTime($news->getDateajout()));
-        $news->setDatemodif(new DateTime($news->getDatemodif()));
+        /*$news->setDateajout(new DateTime($news->getDateajout()));
+        $news->setDatemodif(new DateTime($news->getDatemodif()));*/
 
         return $news;
     }
