@@ -45,9 +45,8 @@ abstract class NewsManager {
 
     /**
      * Méthode permettant de récupérer une liste à partir de $pId renseigné, et d'une longueur $pNumber
-     * @param $pId | l'ID à partir duquel commence la liste
      * @param $pNumber | la taille de la liste
      * @return array
      */
-    abstract public function getList($pId, $pNumber);
+    abstract public function getList($pNumber);
 }

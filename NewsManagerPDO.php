@@ -93,25 +93,25 @@ class NewsManagerPDO extends NewsManager {
 
     /**
      * Méthode permettant de récupérer une liste à partir de $pId renseigné, et d'une longueur $pNumber
-     * @param $pId | l'ID à partir duquel commence la liste
      * @param $pNumber | la taille de la liste
      * @return array
      */
-    public function getList($pId, $pNumber) {
-        $query = $this->db->prepare('SELECT id, auteur, titre, contenu, dateAjout, dateModif FROM news WHERE id = ? LIMIT ? ORDER BY id DESC');
+    public function getList($pNumber) {
+        $query = $this->db->query('SELECT id, auteur, titre, contenu, dateAjout, dateModif FROM news ORDER BY id DESC LIMIT '.$pNumber);
+        /*$query = $this->db->prepare('SELECT id, auteur, titre, contenu, dateAjout, dateModif FROM news ORDER BY id DESC LIMIT :limit');
         $query->execute([
-            $pId,
-            $pNumber
-        ]);
+            ':limit' => $pNumber
+        ]);*/
         $query->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'News');
 
-        $news = [];
-        while ($news = $query->fetch()) {
+        $newsList = $query->fetchAll();
+        foreach ($newsList as $news) {
             $news->setDateajout(new DateTime($news->getDateajout()));
-            $news->setDatemodif(new DateTime($news->getDateajout()));
-            $news[] = $news;
+            $news->setDatemodif(new DateTime($news->getDatemodif()));
         }
 
-        return $news;
+        $query->closeCursor();
+
+        return $newsList;
     }
 }
