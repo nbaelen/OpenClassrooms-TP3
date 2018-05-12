@@ -20,7 +20,8 @@ $manager = new NewsManagerPDO($db);
 <html>
 <head>
     <title>POO PHP - TP3 - News</title>
-    <meta charset="utf-8">
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 
 <br/><a href="admin.php">Accéder à l'espace d'administration</a>
@@ -34,7 +35,7 @@ $manager = new NewsManagerPDO($db);
         echo '<p>' . htmlspecialchars(nl2br($news->getContenu())) . '</p>';
     } else {
         ?>
-        <h1> Liste des 5 dernières news </h1>
+        <h1 id="main-title"> Liste des 5 dernières news </h1>
         <?php
         $newsList = $manager->getList(5);
 
