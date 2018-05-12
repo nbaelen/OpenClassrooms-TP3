@@ -35,7 +35,7 @@ class NewsManagerPDO extends NewsManager {
      * @param $pNewsName | l'ID de la News à supprimer
      * @return void
      */
-    protected function delete($pNewsName) {
+    public function delete($pNewsName) {
         if (is_numeric($pNewsName)) {
             $query = $this->db->query('DELETE FROM news WHERE id = '.(int) $pNewsName);
         }
@@ -47,7 +47,7 @@ class NewsManagerPDO extends NewsManager {
      * @param News $pNews | News à éditer
      * @return void
      */
-    protected function edit(News $pNews) {
+    public function edit(News $pNews) {
         // TODO: Implement edit() method.
     }
 
@@ -88,8 +88,6 @@ class NewsManagerPDO extends NewsManager {
 
         return $news;
     }
-
-
 
     /**
      * Méthode permettant de récupérer une liste à partir de $pId renseigné, et d'une longueur $pNumber

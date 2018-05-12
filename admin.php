@@ -13,6 +13,12 @@ include('database.php');
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 
 $manager = new NewsManagerPDO($db);
+
+
+//Gestion du formulaire
+if (isset($_GET['supprimer'])) {
+    $manager->delete((int) $_GET['supprimer']);
+}
 ?>
 
 

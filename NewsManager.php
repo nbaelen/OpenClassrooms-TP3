@@ -14,14 +14,14 @@ abstract class NewsManager {
      * @param $pNewsName | l'ID ou le nom de la News à supprimer
      * @return void
      */
-    abstract protected function delete($pNewsName);
+    abstract public function delete($pNewsName);
 
     /**
      * Méthode permettant l'édition d'une News
      * @param News $pNews | News à éditer
      * @return void
      */
-    abstract protected function edit(News $pNews);
+    abstract public function edit(News $pNews);
 
     /**
      * Méthode permettant la sauvegarde d'une News
