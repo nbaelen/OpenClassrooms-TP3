@@ -3,7 +3,7 @@
 require ('autoload.php');
 
 //Création du NewsManager
-$manager = new NewsManagerPDO(DBFactory::getDBConnexionPDO());
+$manager = new NewsManagerMySQLi(DBFactory::getDBConnexionMySQLi());
 ?>
 
 
@@ -31,8 +31,15 @@ $manager = new NewsManagerPDO(DBFactory::getDBConnexionPDO());
         $newsList = $manager->getList(5);
 
         foreach ($newsList as $news) {
-            echo '<div id="'.$news->getId().'"><a href="?id=' . $news->getId().'">' . htmlspecialchars($news->getTitre()) . '</a>';
-            echo '<p>' . nl2br(htmlspecialchars($news->getContenu())) . '</p></div><br/>';
+            echo '<div id="'.$news->getId().'"><a href="?id=' . $news->getId().'">' . htmlspecialchars($news->getTitre()) . '</a><p>';
+
+            if (strlen($news->getContenu()) >= 200) {
+                echo nl2br(htmlspecialchars(substr($news->getContenu(), 0,200))) . ' [...]';
+            } else {
+                echo nl2br(htmlspecialchars($news->getContenu()));
+            }
+
+            echo '</p></div>';
         }
     }
 ?>
