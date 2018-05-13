@@ -8,11 +8,8 @@ function autoload($classname) {
 spl_autoload_register('autoload');
 
 
-//Création de PDO et de NewsManager
-include('database.php');
-$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-
-$manager = new NewsManagerPDO($db);
+//Création du NewsManager
+$manager = new NewsManagerPDO(DBFactory::getDBConnexionPDO());
 ?>
 
 
