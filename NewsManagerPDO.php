@@ -37,7 +37,7 @@ class NewsManagerPDO extends NewsManager {
      */
     public function delete($pNewsName) {
         if (is_numeric($pNewsName)) {
-            $query = $this->db->query('DELETE FROM news WHERE id = '.(int) $pNewsName);
+            $query = $this->db->query('DELETE FROM news WHERE id = ' . (int) $pNewsName);
         }
 
     }
@@ -55,14 +55,6 @@ class NewsManagerPDO extends NewsManager {
             $pNews->getContenu(),
             $pNews->getId()
         ]);
-    }
-
-    /**
-     * Méthode permettant la sauvegarde d'une News
-     * @param News $pNews | News à sauvegarder
-     * @return void
-     */
-    public function save(News $pNews) {
     }
 
     /**

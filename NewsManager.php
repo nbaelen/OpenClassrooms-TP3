@@ -24,13 +24,6 @@ abstract class NewsManager {
     abstract public function edit(News $pNews);
 
     /**
-     * Méthode permettant la sauvegarde d'une News
-     * @param News $pNews | News à sauvegarder
-     * @return void
-     */
-    abstract public function save(News $pNews);
-
-    /**
      * Méthode renvoyant le nombre de News sauvegardées
      * @return int
      */
