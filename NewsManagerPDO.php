@@ -21,7 +21,7 @@ class NewsManagerPDO extends NewsManager {
      * @param News $pNews | News à ajouter
      * @return void
      */
-    protected function add(News $pNews) {
+    public function add(News $pNews) {
         $query = $this->db->prepare('INSERT INTO news(auteur, titre, contenu, dateAjout, dateModif) VALUES (?, ?, ?, NOW(), NOW())');
         $query->execute([
             $pNews->getAuteur(),

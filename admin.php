@@ -28,14 +28,24 @@ if (isset($_GET['supprimer'])) {
 }
 
 if (isset($_POST['auteur'])) {
-    $news = new News([
+    if ($_POST['submit'] == "Ajouter") {
+        $news = new News([
+            'auteur' => $_POST['auteur'],
+            'titre' => $_POST['titre'],
+            'contenu' => $_POST['contenu']
+        ]);
+        $manager->add($news);
+        $message = "La news a bien été ajoutée !";
+    } else {
+        $news = new News([
             'id' => $_POST['id'],
             'auteur' => $_POST['auteur'],
             'titre' => $_POST['titre'],
             'contenu' => $_POST['contenu']
-    ]);
-    $manager->edit($news);
-    $message = "La news a bien été modifiée !";
+        ]);
+        $manager->edit($news);
+        $message = "La news a bien été modifiée !";
+    }
 }
 ?>
 
@@ -68,7 +78,7 @@ if (isset($_POST['auteur'])) {
             <label for="contenu">Contenu :</label><br/>
             <textarea id="contenu" name="contenu" cols="60" rows="8"><?= $newsSelect->getContenu() ?></textarea><br/>
             <input type="hidden" id="id" name="id" value="<?= $newsSelect->getId() ?>"/>
-            <input type="submit" value="Modifier"/>
+            <input type="submit" name="submit" id="submit" value="Modifier"/>
         </form>
         <?php
     } else {
@@ -80,7 +90,7 @@ if (isset($_POST['auteur'])) {
             <input type="text" id="titre" name="titre"/><br/>
             <label for="contenu">Contenu :</label><br/>
             <textarea id="contenu" name="contenu" cols="60" rows="8"></textarea><br/>
-            <input type="submit" value="Ajouter"/>
+            <input type="submit" name="submit" id="submit" value="Ajouter"/>
         </form>
     <?php
     }

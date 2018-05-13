@@ -7,7 +7,7 @@ abstract class NewsManager {
      * @param News $pNews | News à ajouter
      * @return void
      */
-    abstract protected function add(News $pNews);
+    abstract public function add(News $pNews);
 
     /**
      * Méthode permettant la suppression d'une News
