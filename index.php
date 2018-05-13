@@ -1,12 +1,6 @@
 <?php
 
-//Fonction d'autoload
-function autoload($classname) {
-    require $classname.'.php';
-}
-
-spl_autoload_register('autoload');
-
+require ('autoload.php');
 
 //Création du NewsManager
 $manager = new NewsManagerPDO(DBFactory::getDBConnexionPDO());
