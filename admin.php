@@ -64,11 +64,11 @@ if (isset($_POST['auteur'])) {
         ?>
         <form action="admin.php" method="post">
             <label for="auteur">Auteur :</label>
-            <input type="text" id="auteur" name="auteur" value="<?= $newsSelect->getAuteur() ?>"/><br/>
+            <input type="text" id="auteur" name="auteur" value="<?= htmlspecialchars($newsSelect->getAuteur()) ?>"/><br/>
             <label for="titre">Titre :</label>
-            <input type="text" id="titre" name="titre" value="<?= $newsSelect->getTitre() ?>"/><br/>
+            <input type="text" id="titre" name="titre" value="<?= htmlspecialchars($newsSelect->getTitre()) ?>"/><br/>
             <label for="contenu">Contenu :</label><br/>
-            <textarea id="contenu" name="contenu" cols="60" rows="8"><?= $newsSelect->getContenu() ?></textarea><br/>
+            <textarea id="contenu" name="contenu" cols="60" rows="8"><?= (htmlspecialchars($newsSelect->getContenu())) ?></textarea><br/>
             <input type="hidden" id="id" name="id" value="<?= $newsSelect->getId() ?>"/>
             <input type="submit" name="submit" id="submit" value="Modifier"/>
         </form>
@@ -103,8 +103,8 @@ if (isset($_POST['auteur'])) {
             $newsList = $manager->getList(5);
 
             foreach ($newsList as $news) {
-                echo '<tr><td>' . $news->getAuteur() . '</td>';
-                echo '<td>' . $news->getTitre() . '</td>';
+                echo '<tr><td>' . htmlspecialchars($news->getAuteur()) . '</td>';
+                echo '<td>' . htmlspecialchars($news->getTitre()) . '</td>';
                 echo '<td>' . $news->getDateajout()->format('d/m/Y à H:i:s') . '</td>';
                 echo '<td>' . ($news->getDatemodif() == $news->getDateajout() ? '-' : $news->getDatemodif()->format('d/m/Y à H:i:s')) . '</td>';
                 echo '<td> <a href="admin.php?modifier=' . $news->getId() . '">Modifier</a> | <a href="admin.php?supprimer='. $news->getId() . '">Supprimer</a></td></tr>';
