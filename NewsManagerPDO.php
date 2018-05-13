@@ -48,7 +48,13 @@ class NewsManagerPDO extends NewsManager {
      * @return void
      */
     public function edit(News $pNews) {
-        // TODO: Implement edit() method.
+        $query = $this->db->prepare('UPDATE news SET auteur = ?, titre = ?, contenu = ?, dateModif = NOW() WHERE id = ?');
+        $query->execute([
+            $pNews->getAuteur(),
+            $pNews->getTitre(),
+            $pNews->getContenu(),
+            $pNews->getId()
+        ]);
     }
 
     /**

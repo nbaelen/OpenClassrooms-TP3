@@ -15,9 +15,27 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 $manager = new NewsManagerPDO($db);
 
 
+//Gestion de la News selectionnée
+if (isset($_GET['modifier'])) {
+    $newsSelect = $manager->get((int) $_GET['modifier']);
+}
+
+
 //Gestion du formulaire
 if (isset($_GET['supprimer'])) {
     $manager->delete((int) $_GET['supprimer']);
+    $message = "La news a bien été supprimée !";
+}
+
+if (isset($_POST['auteur'])) {
+    $news = new News([
+            'id' => $_POST['id'],
+            'auteur' => $_POST['auteur'],
+            'titre' => $_POST['titre'],
+            'contenu' => $_POST['contenu']
+    ]);
+    $manager->edit($news);
+    $message = "La news a bien été modifiée !";
 }
 ?>
 
@@ -36,8 +54,11 @@ if (isset($_GET['supprimer'])) {
 <div id="whole-page">
 
 <?php
+    if (isset($message)) {
+        echo '<p>' . $message . '</p>';
+    }
+
     if (isset($_GET['modifier'])) {
-        $newsSelect = $manager->get((int) $_GET['modifier']);
         ?>
         <form action="admin.php" method="post">
             <label for="auteur">Auteur :</label>
@@ -45,7 +66,8 @@ if (isset($_GET['supprimer'])) {
             <label for="titre">Titre :</label>
             <input type="text" id="titre" name="titre" value="<?= $newsSelect->getTitre() ?>"/><br/>
             <label for="contenu">Contenu :</label><br/>
-            <textarea id="contenu" name="contenu" cols="60" rows="8">value="<?= $newsSelect->getContenu() ?></textarea><br/>
+            <textarea id="contenu" name="contenu" cols="60" rows="8"><?= $newsSelect->getContenu() ?></textarea><br/>
+            <input type="hidden" id="id" name="id" value="<?= $newsSelect->getId() ?>"/>
             <input type="submit" value="Modifier"/>
         </form>
         <?php
